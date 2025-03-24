@@ -25,7 +25,7 @@ const Navigation = () => {
   }
 
   return (
-    <div className="relative w-full bg-[#3F495F] px-4 py-2 rounded-[9.4px] shadow-md">
+    <div className="w-full bg-[#3F495F] px-4 py-2 rounded-[9.4px] shadow-md">
       <div className="flex flex-row gap-2">
         {tabs.map((tab) => {
           const href = tab.id
