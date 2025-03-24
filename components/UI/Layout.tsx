@@ -17,7 +17,7 @@ const AppLayout: FC<AppLayoutProps> = ({
         animate={{ opacity: 1 }}
         className="flex-grow relative"
       >
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0">
           <Image
             src="/images/airport.png"
             alt="Airport"
@@ -33,7 +33,7 @@ const AppLayout: FC<AppLayoutProps> = ({
             opacity: 0.9
           }}
         />
-        <div className="relative z-10 container mx-auto px-4 py-6 text-white">
+        <div className="w-full h-full px-20 py-11">
           {children}
         </div>
       </motion.main>
