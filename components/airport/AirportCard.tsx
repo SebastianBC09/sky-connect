@@ -14,14 +14,13 @@ const AirportCard: FC<AirportCardType> = ({airport_name, country_name, iata_code
             <p className="font-normal text-xl">{country_name}</p>
           </div>
           <div className='w-fit'>
-            <p className="font-medium text-[2.625rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent">{iata_code}</p>
+            <p className="font-gotham font-medium text-[2.625rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent">{iata_code}</p>
 
           </div>
         </div>
       </div>
       <div className="absolute top-6 right-6 z-20">
         <Image
-          className="dark:invert"
           src="/airport.svg"
           alt="Airport logo"
           width={45}
