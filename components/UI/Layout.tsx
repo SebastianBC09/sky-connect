@@ -33,7 +33,7 @@ const AppLayout: FC<AppLayoutProps> = ({
             opacity: 0.9
           }}
         />
-        <div className="w-full h-full px-20 py-11">
+        <div className="relative w-full h-full px-20 py-11">
           {children}
         </div>
       </motion.main>
