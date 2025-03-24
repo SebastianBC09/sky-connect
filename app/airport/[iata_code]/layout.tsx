@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import AppLayout from '@/components/UI/Layout';
 import Navigation from '@/components/UI/Navigation';
@@ -11,46 +11,50 @@ export default function AirportLayout({ children }: { children: ReactNode }) {
   const {
     setCurrentAirportByIataCode,
     currentAirport,
-    loading,
-    airports,
-    getAirportByIataCode
   } = useAirportStore();
+
+  const [airportLoading, setAirportLoading] = useState(true);
 
   useEffect(() => {
     const setupAirport = async () => {
-      if (iata_code && (!currentAirport || currentAirport.iata_code !== iata_code)) {
-        const airport = getAirportByIataCode(iata_code as string);
-        console.log(airport)
-        if (airport) {
-          await setCurrentAirportByIataCode(iata_code as string);
-        }
+      setAirportLoading(true);
+
+      if (iata_code) {
+        await setCurrentAirportByIataCode(iata_code as string);
       }
+      setAirportLoading(false);
     };
 
     setupAirport();
-  }, [iata_code, airports.length, currentAirport, setCurrentAirportByIataCode, getAirportByIataCode]);
+  }, [iata_code, setCurrentAirportByIataCode]);
 
-
-  if (loading) {
-    return <div className="flex justify-center items-center min-h-screen">Cargando...</div>;
+  if (airportLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Cargando...
+      </div>
+    );
   }
-
-  if (!currentAirport && !loading) {
-    return <div className="flex justify-center items-center min-h-screen">Aeropuerto no encontrado</div>;
+  if (!currentAirport) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Aeropuerto no encontrado
+      </div>
+    );
   }
 
   return (
     <AppLayout>
       <div className='flex flex-col gap-[3.75rem]'>
         <section className='flex flex-col justify-between items-center gap-9'>
-          <h1 className="relative w-fit font-gotham font-medium text-[5rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent" >
+          <h1 className="w-fit font-gotham font-medium text-[5rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent" >
             {currentAirport?.airport_name}
           </h1>
           <Navigation />
         </section>
-        <main>
+        <section>
             {children}
-        </main>
+        </section>
       </div>
     </AppLayout>
   );
