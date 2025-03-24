@@ -182,17 +182,17 @@ Para **autorizar** peticiones a la [AviationStack API](https://aviationstack.com
 
 ```mermaid
 flowchart LR
-    A[Usuario] --> B[Next.js App (App Router)]
-    B -->|fetch /airports| C[Zustand Store]
-    B -->|fetch /airports?search=...| D[AviationStack API]
+    A[Usuario] --> B["Next.js App (App Router)"]
+    B -->|fetch /airports?search=...| C[Zustand Store]
+    B -->|fetch /airports| D[AviationStack API]
 
     C --> B
-    D --> B
+    D --> C
 
-    style A fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style B fill:#f1f5f9,stroke:#666,stroke-width:2px
-    style C fill:#bae6fd,stroke:#0ea5e9,stroke-width:2px
-    style D fill:#ffedd5,stroke:#f97316,stroke-width:2px
+    style A fill:#f9f9f9,stroke:#333,stroke-width:2px,color:#000
+    style B fill:#f1f5f9,stroke:#666,stroke-width:2px,color:#000
+    style C fill:#bae6fd,stroke:#0ea5e9,stroke-width:2px,color:#000
+    style D fill:#ffedd5,stroke:#f97316,stroke-width:2px, color:#000
 ```
 
 **Descripción**:
@@ -203,12 +203,19 @@ flowchart LR
 ### Flujo de Páginas
 
 ```mermaid
-graph TD
-    Home((Home)) --> /airports((Listado Aeropuertos))
-    /airports((Listado Aeropuertos)) --> /airport/[iata]((Detalle Aeropuerto))
-    /airport/[iata] --> /airport/[iata]/location((Ubicación))
-    /airport/[iata] --> /airport/[iata]/timezone((Zona Horaria))
-    /airport/[iata] --> /airport/[iata]/stats((Estadísticas))
+flowchart TB
+    Home["/"] --> Airports["/airports"]
+    Airports --> AirportDetail["/airport/[iata_code]"]
+    AirportDetail --> Location["/airport/[iata_code]/location"]
+    AirportDetail --> Timezone["/airport/[iata_code]/timezone"]
+    AirportDetail --> Stats["/airport/[iata_code]/stats"]
+
+    style Home fill:#f9f9f9,stroke:#333,stroke-width:1px,color:#000
+    style Airports fill:#e2e8f0,stroke:#666,stroke-width:1px,color:#000
+    style AirportDetail fill:#fef9c3,stroke:#f59e0b,stroke-width:1px,color:#000
+    style Location fill:#d9f99d,stroke:#84cc16,stroke-width:1px,color:#000
+    style Timezone fill:#d9f99d,stroke:#84cc16,stroke-width:1px,color:#000
+    style Stats fill:#d9f99d,stroke:#84cc16,stroke-width:1px,color:#000
 ```
 
 ---
