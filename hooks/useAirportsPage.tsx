@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react';
 import { useAirportStore } from '@/store/airportStore';
 
 const useAirportsPage = () => {
   const { loading, airports, pagination, fetchAllAirports } = useAirportStore();
+  const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
   const perPage = 5;
 
@@ -10,11 +11,19 @@ const useAirportsPage = () => {
     fetchAllAirports();
   }, [fetchAllAirports]);
 
+  const filteredAirports = useMemo(() => {
+    const lower = searchTerm.toLowerCase();
+    return airports.filter((airport) =>
+      airport.airport_name.toLowerCase().includes(lower) ||
+      airport.iata_code.toLowerCase().includes(lower)
+    );
+  }, [airports, searchTerm]);
+
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
-  const currentAirports = airports.slice(startIndex, endIndex);
+  const currentAirports = filteredAirports.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(airports.length / perPage) || 1;
+  const totalPages = Math.ceil(filteredAirports.length / perPage) || 1;
 
   function handleNext() {
     if (page < totalPages) {
@@ -27,16 +36,21 @@ const useAirportsPage = () => {
       setPage((prev) => prev - 1);
     }
   }
+
   return {
     loading,
-    airports,
-    currentAirports,
+    pagination,
+    searchTerm,
+    setSearchTerm,
+    page,
+    perPage,
+    totalPages,
     handleNext,
     handlePrev,
-    page,
-    pagination,
-    totalPages
-  }
-}
+    currentAirports,
+    filteredAirports,
+    airports,
+  };
+};
 
-export default useAirportsPage
+export default useAirportsPage;
