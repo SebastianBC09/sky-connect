@@ -19,7 +19,7 @@ const AirportCard: FC<AirportCardType> = ({ airport_name, country_name, iata_cod
           </div>
         </div>
       </div>
-      <div className="absolute top-6 right-6 z-20">
+      <div className="absolute top-6 right-6">
         <Image src="/airport.svg" alt="Airport logo" width={45} height={45} priority />
       </div>
     </BaseCard>
