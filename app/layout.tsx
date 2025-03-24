@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { inter, gothamBlack } from "./fonts";
 import "./globals.css";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${gothamBlack.variable}`}
       >
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>
+          {children}
+        </Suspense>
       </body>
     </html>
   );
