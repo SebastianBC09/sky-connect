@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-const apiClient =  axios.create({
+const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -19,12 +19,21 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+interface ApiErrorResponse {
+  error?: {
+    code: number;
+    type: string;
+    message: string;
+  };
+}
+
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
-  (error: AxiosError) => {
+  (error: AxiosError<ApiErrorResponse>) => {
     if (error.response) {
-      const { data, status } = error.response as { data: any; status: number };
-      if (data.error) {
+      const { data, status } = error.response;
+
+      if (data?.error) {
         const { code, type, message } = data.error;
         console.error(`API Error [${code} - ${type}]: ${message}`);
 
