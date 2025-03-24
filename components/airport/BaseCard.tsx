@@ -18,9 +18,9 @@ const BaseCard: FC<BaseCardProps> = ({
   const cardContent = (
     <motion.div
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
-      className="relative w-auto h-auto overflow-hidden shadow-md border-[1px] border-white rounded-[7px]"
+      className="relative w-full h-auto overflow-hidden shadow-md border-[1px] border-white rounded-[7px]"
     >
-      <div className="absolute right-0 top-0 w-[40%] h-full z-0">
+      <div className="absolute right-0 top-0 w-[30%] sm:w-[40%] h-full z-0">
         <Image
           className="object-cover rounded-[7px] opacity-[0.4]"
           src="/images/plane.png"
@@ -35,7 +35,7 @@ const BaseCard: FC<BaseCardProps> = ({
           background: 'linear-gradient(90deg, #3F495F 0%, #0E1934 74%)'
         }}
       />
-      <div className="relative h-full text-white z-20">
+      <div className="relative h-full w-full text-white z-20 p-3 sm:p-4 md:p-6">
         {children}
       </div>
     </motion.div>
@@ -43,7 +43,7 @@ const BaseCard: FC<BaseCardProps> = ({
 
   if (href) {
     return (
-      <Link href={href} prefetch={prefetch}>
+      <Link href={href} prefetch={prefetch} className="w-full block">
         {cardContent}
       </Link>
     );

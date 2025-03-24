@@ -45,14 +45,14 @@ export default function AirportLayout({ children }: { children: ReactNode }) {
 
   return (
     <AppLayout>
-      <div className='flex flex-col gap-[3.75rem]'>
-        <section className='flex flex-col justify-between items-center gap-9'>
-          <h1 className="w-fit font-gotham font-medium text-[5rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent" >
+      <div className='flex flex-col gap-6 md:gap-10 lg:gap-[3.75rem] px-4 sm:px-6 md:px-8'>
+        <section className='flex flex-col justify-between items-center gap-4 md:gap-6 lg:gap-9 pt-4 md:pt-6'>
+          <h1 className="w-fit font-gotham font-medium text-3xl sm:text-4xl md:text-5xl lg:text-[5rem] bg-gradient-to-r from-[#006AFF] to-[#00F9FF] bg-clip-text text-transparent text-center" >
             {currentAirport?.airport_name}
           </h1>
           <Navigation />
         </section>
-        <section>
+        <section className="w-full">
             {children}
         </section>
       </div>

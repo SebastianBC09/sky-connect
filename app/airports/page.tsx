@@ -35,84 +35,90 @@ export default function Page() {
   if (loading) {
     return (
       <AppLayout>
-        <p className="text-center mt-10">Cargando aeropuertos...</p>
+        <div className="h-full w-full flex items-center justify-center">
+          <p className="text-center text-white text-lg">Cargando aeropuertos...</p>
+        </div>
       </AppLayout>
     );
   }
 
   return (
     <AppLayout>
-      <div className="mb-16">
-        <SearchBar
-          variant="results"
-          initialValue={searchTerm}
-          onSearch={handleSearch}
-        />
+      <div className="w-full flex flex-col">
+        <div className="mb-6 sm:mb-10 md:mb-16">
+          <SearchBar
+            variant="results"
+            initialValue={searchTerm}
+            onSearch={handleSearch}
+          />
+        </div>
+
+        {currentAirports.length === 0 ? (
+          <div className="w-full flex items-center justify-center py-8">
+            <p className="text-center text-white text-lg">
+              No se encontraron resultados para &quot;{searchTerm}&quot;.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 md:gap-12">
+              {currentAirports.map((airport) => (
+                <AirportCard
+                  key={airport.iata_code}
+                  airport_name={airport.airport_name}
+                  country_name={airport.country_name}
+                  iata_code={airport.iata_code}
+                  id={airport.iata_code}
+                />
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 sm:mt-8 md:mt-10">
+              <button
+                onClick={handlePrev}
+                disabled={page === 1}
+                className="
+                  w-full sm:w-auto
+                  min-w-28
+                  h-10 sm:h-12
+                  rounded-lg
+                  py-1 sm:py-2
+                  px-4 sm:px-6
+                  disabled:opacity-50
+                  text-white
+                  font-bold
+                  bg-[linear-gradient(0deg,_#0060FF,_#0060FF)]
+                "
+              >
+                Anterior
+              </button>
+
+              <span className="text-white text-sm sm:text-base py-2">
+                Página {page} de {totalPages}
+              </span>
+
+              <button
+                onClick={handleNext}
+                disabled={page === totalPages || currentAirports.length === 0}
+                className="
+                  w-full sm:w-auto
+                  min-w-28
+                  h-10 sm:h-12
+                  rounded-lg
+                  py-1 sm:py-2
+                  px-4 sm:px-6
+                  disabled:opacity-50
+                  text-white
+                  font-bold
+                  bg-[linear-gradient(0deg,_#0060FF,_#0060FF)]
+                "
+              >
+                Siguiente
+              </button>
+            </div>
+          </>
+        )}
       </div>
-
-      {currentAirports.length === 0 ? (
-        <p className="text-center mt-10">
-          No se encontraron resultados para &quot;{searchTerm}&quot;.
-        </p>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {currentAirports.map((airport) => (
-              <AirportCard
-                key={airport.iata_code}
-                airport_name={airport.airport_name}
-                country_name={airport.country_name}
-                iata_code={airport.iata_code}
-                id={airport.iata_code}
-              />
-            ))}
-          </div>
-
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <button
-              onClick={handlePrev}
-              disabled={page === 1}
-              className="
-                w-[131px]
-                h-[47.1px]
-                rounded-[9.4px]
-                py-[7.05px]
-                px-[28.2px]
-                gap-[14.1px]
-                disabled:opacity-50
-                text-white
-                font-bold
-                bg-[linear-gradient(0deg,_#0060FF,_#0060FF)]
-              "
-            >
-              Anterior
-            </button>
-
-            <span>
-              Página {page} de {totalPages}
-            </span>
-
-            <button
-              onClick={handleNext}
-              disabled={page === totalPages || currentAirports.length === 0}
-              className="
-                w-[131px]
-                h-[47.1px]
-                rounded-[9.4px]
-                py-[7.05px]
-                px-[28.2px]
-                gap-[14.1px]
-                disabled:opacity-50
-                text-white
-                font-bold
-                bg-[linear-gradient(0deg,_#0060FF,_#0060FF)]
-              "
-            >
-              Siguiente
-            </button>
-          </div>
-        </>
-      )}
     </AppLayout>
   );
 }

@@ -25,8 +25,8 @@ const Navigation = () => {
   }
 
   return (
-    <div className="w-full bg-[#3F495F] px-4 py-2 rounded-[9.4px] shadow-md">
-      <div className="flex flex-row gap-2">
+    <div className="w-full bg-[#3F495F] px-2 sm:px-4 py-2 rounded-[9.4px] shadow-md">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2">
         {tabs.map((tab) => {
           const href = tab.id
             ? `/airport/${iata_code}/${tab.id}`
@@ -39,7 +39,12 @@ const Navigation = () => {
               key={tab.id}
               href={href}
               className={`
-                w-[26.25rem] h-[4rem] flex justify-center items-center font-bold rounded-[9.4px]
+                flex-1 min-w-24
+                h-10 sm:h-12 md:h-16
+                flex justify-center items-center
+                font-bold
+                text-sm sm:text-base
+                rounded-lg
                 transition-all duration-200
                 ${active
                   ? 'bg-[linear-gradient(0deg,_#0060FF,_#0060FF)] text-white'

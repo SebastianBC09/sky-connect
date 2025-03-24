@@ -12,12 +12,12 @@ const sectionInfo = {
 const AirportTimeZone: FC<AirportTimezoneType> = ({ timezone, gmt }) => {
   return (
     <BaseCard>
-      <div className="h-full pt-[1.625rem] pb-[1.625rem] pl-[2.5rem]">
-      <Section {...sectionInfo}/>
-      <div className='flex flex-col'>
-      </div>
-        <InfoItem label="Zona Horaria" value={timezone} />
-        <InfoItem label="GMT" value={gmt} />
+      <div className="h-full p-4 sm:p-5 md:pt-6 md:pb-6 md:pl-8 lg:pt-[1.625rem] lg:pb-[1.625rem] lg:pl-[2.5rem]">
+        <Section {...sectionInfo}/>
+        <div className='flex flex-col mt-3 md:mt-4 lg:mt-6'>
+          <InfoItem label="Zona Horaria" value={timezone} />
+          <InfoItem label="GMT" value={gmt} />
+        </div>
       </div>
     </BaseCard>
   );

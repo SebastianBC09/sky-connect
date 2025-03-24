@@ -32,7 +32,7 @@ const AirportMap: FC<AirportMapProps> = ({ latitude, longitude }) => {
   }
 
   return (
-    <div className="w-full h-[500px] relative">
+    <div className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] relative">
       <MapContainer
         center={[latNum, lonNum]}
         zoom={10}
