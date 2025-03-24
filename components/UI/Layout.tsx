@@ -7,42 +7,49 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
-const AppLayout: FC<AppLayoutProps> = ({
-  children,
-}) => {
+const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="h-screen w-full overflow-hidden"
+      exit={{ opacity: 0 }}
+      className="h-screen w-screen overflow-hidden relative"
     >
-      {/* Contenedor principal que ocupa toda la pantalla */}
-      <div className="relative w-full h-full">
-        {/* Imagen de fondo */}
-        <div className="absolute inset-0 w-full h-full">
-          <Image
-            src="/images/airport.png"
-            alt="Airport"
-            fill
-            priority
-            className="object-cover w-full h-full"
-          />
-        </div>
-
-        {/* Overlay con gradiente */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            background: 'linear-gradient(135deg, #111E3E 0%, #111E3E 0.01%, #020D20 100%)',
-            opacity: 0.9
-          }}
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        className="absolute inset-0 w-full h-full -z-10"
+      >
+        <Image
+          src="/images/airport.png"
+          alt="Airport"
+          fill
+          priority
+          className="object-cover w-full h-full"
         />
-
-        {/* Contenedor del contenido con padding responsive */}
-        <div className="absolute inset-0 w-full h-full overflow-auto px-4 sm:px-6 md:px-10 lg:px-20 py-6 md:py-11">
-          {children}
-        </div>
-      </div>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0.5 }}
+        animate={{
+          opacity: [0.5, 0.8, 0.9],
+          backgroundPosition: ['0% 0%', '50% 50%', '100% 100%'],
+        }}
+        transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'mirror' }}
+        className="absolute inset-0 -z-0"
+        style={{
+          background: 'linear-gradient(135deg, #111E3E 0%, #020D20 100%)',
+          backgroundSize: '200% 200%',
+        }}
+      />
+      <motion.div
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.8, ease: 'easeOut' }}
+        className="relative w-full h-full overflow-auto px-4 sm:px-6 md:px-10 lg:px-20 py-6 md:py-11"
+      >
+        {children}
+      </motion.div>
     </motion.main>
   );
 };
