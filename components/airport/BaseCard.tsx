@@ -20,9 +20,9 @@ const BaseCard: FC<BaseCardProps> = ({
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
       className="relative w-auto h-auto overflow-hidden shadow-md border-[1px] border-white rounded-[7px]"
     >
-      <div className="absolute right-0 top-0 w-[46.8%] h-full z-0">
+      <div className="absolute right-0 top-0 w-[40%] h-full z-0">
         <Image
-          className="object-cover rounded-[7px]"
+          className="object-cover rounded-[7px] opacity-[0.4]"
           src="/images/plane.png"
           alt="Avión"
           priority
