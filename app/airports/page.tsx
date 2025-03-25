@@ -1,10 +1,11 @@
 'use client';
+import { useEffect } from 'react';
+import { motion, Variants } from 'framer-motion';
 import AppLayout from '@/components/UI/Layout';
 import SearchBar from '@/components/UI/Searchbar';
 import AirportCard from '@/components/airport/AirportCard';
 import useAirportsPage from '@/hooks/useAirportsPage';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -17,6 +18,8 @@ export default function Page() {
     handlePrev,
     handleNext,
     page,
+    setPage,
+    visiblePages,
     totalPages,
   } = useAirportsPage();
 
@@ -30,6 +33,23 @@ export default function Page() {
 
   const handleSearch = (term: string) => {
     router.push(`/airports?search=${encodeURIComponent(term)}`);
+  };
+
+  const buttonVariants: Variants = {
+    rest: {
+      scale: 1,
+      boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)',
+      transition: { duration: 0.2 },
+    },
+    hover: {
+      scale: 1.05,
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+      transition: { duration: 0.2 },
+    },
+    tap: {
+      scale: 0.95,
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.15)',
+    },
   };
 
   if (loading) {
@@ -72,9 +92,12 @@ export default function Page() {
                 />
               ))}
             </div>
-
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 sm:mt-8 md:mt-10">
-              <button
+              <motion.button
+                variants={buttonVariants}
+                initial="rest"
+                whileHover="hover"
+                whileTap="tap"
                 onClick={handlePrev}
                 disabled={page === 1}
                 className="
@@ -91,13 +114,41 @@ export default function Page() {
                 "
               >
                 Anterior
-              </button>
-
-              <span className="text-white text-sm sm:text-base py-2">
-                Página {page} de {totalPages}
-              </span>
-
-              <button
+              </motion.button>
+              {visiblePages.map((p) => (
+                <motion.button
+                  key={p}
+                  variants={buttonVariants}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="tap"
+                  onClick={() => setPage(p)}
+                  className={`
+                    w-full
+                    h-10
+                    sm:w-12
+                    sm:h-12
+                    flex
+                    items-center
+                    justify-center
+                    rounded-lg
+                    text-white
+                    font-bold
+                    ${
+                      p === page
+                        ? 'bg-[linear-gradient(0deg,_#0040CC,_#0040CC)]'
+                        : 'bg-[linear-gradient(0deg,_#0060FF,_#0060FF)]'
+                    }
+                  `}
+                >
+                  {p}
+                </motion.button>
+              ))}
+              <motion.button
+                variants={buttonVariants}
+                initial="rest"
+                whileHover="hover"
+                whileTap="tap"
                 onClick={handleNext}
                 disabled={page === totalPages || currentAirports.length === 0}
                 className="
@@ -114,7 +165,7 @@ export default function Page() {
                 "
               >
                 Siguiente
-              </button>
+              </motion.button>
             </div>
           </>
         )}

@@ -25,6 +25,20 @@ const useAirportsPage = () => {
 
   const totalPages = Math.ceil(filteredAirports.length / perPage) || 1;
 
+  const visiblePages = useMemo(() => {
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (page === 1) {
+      return [1, 2, 3];
+    } else if (page === totalPages) {
+      return [totalPages - 2, totalPages - 1, totalPages];
+    } else {
+      return [page - 1, page, page + 1];
+    }
+  }, [page, totalPages]);
+
   function handleNext() {
     if (page < totalPages) {
       setPage((prev) => prev + 1);
@@ -43,8 +57,10 @@ const useAirportsPage = () => {
     searchTerm,
     setSearchTerm,
     page,
+    setPage,
     perPage,
     totalPages,
+    visiblePages,
     handleNext,
     handlePrev,
     currentAirports,
